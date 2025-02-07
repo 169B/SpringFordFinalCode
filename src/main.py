@@ -1,6 +1,7 @@
 #region VEXcode Generated Robot Configuration
 from vex import *
-import urandom
+from os import urandom
+import random
 
 # Brain should be defined by default
 brain=Brain()
@@ -125,198 +126,15 @@ Distnce2 = 0
 Distance2 = 0
 Turn_Angle = 0
 
-def Move_In_direction_Degree_Speed(Move_In_direction_Degree_Speed__Degree, Move_In_direction_Degree_Speed__Speed):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # LINKED WITH CURRENT PID FOR MOVEMENT VELOCITY
-    LeftMotors.set_velocity(Move_In_direction_Degree_Speed__Speed, PERCENT)
-    Left_Front.set_velocity(Move_In_direction_Degree_Speed__Speed, PERCENT)
-    RightMotors.set_velocity(Move_In_direction_Degree_Speed__Speed, PERCENT)
-    Right_front.set_velocity(Move_In_direction_Degree_Speed__Speed, PERCENT)
 
-def Forward_PID_Distance_Max_Speed(Forward_PID_Distance_Max_Speed__Distance, Forward_PID_Distance_Max_Speed__Max_Speed):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CURRENT PID - DISTANCE IN INCHES
-    # PID VALUES: 0.5 - 0.01 - 0.1 - 0.05
-    error = 0
-    Kp = 0.5
-    Ki = 0.01
-    Kd = 0.1
-    Dellay = 0.05
-    Distance_travled = 0
-    Inertial21.set_rotation(0, DEGREES)
-    RightMotors.set_velocity(5, PERCENT)
-    Right_front.set_velocity(5, PERCENT)
-    LeftMotors.set_velocity(5, PERCENT)
-    Left_Front.set_velocity(5, PERCENT)
-    RightMotors.set_position(0, DEGREES)
-    Right_front.set_position(0, DEGREES)
-    LeftMotors.set_position(0, DEGREES)
-    Left_Front.set_position(0, DEGREES)
-    while True:
-        imput = Inertial21.rotation(DEGREES)
-        error = 0 - imput
-        Proportional = error
-        Distance_travled = ((math.fabs(Right_front.position(DEGREES)) / 360) * (2.75 * pi) + ((math.fabs(Left_Front.position(DEGREES)) / 360) * (2.75 * pi) + ((math.fabs(RightMotors.position(DEGREES)) / 360) * (2.75 * pi) + (math.fabs(LeftMotors.position(DEGREES)) / 360) * (2.75 * pi)))) / 4
-        integral = (integral + error) * Dellay
-        derivitive = (error - Previus_error) * Dellay
-        direction = Kp * Proportional + (Ki * integral + Kd * derivitive)
-        Previus_error = error
-        Move_In_direction_Degree_Speed((direction * Forward_PID_Distance_Max_Speed__Max_Speed) / 33, Forward_PID_Distance_Max_Speed__Max_Speed)
-        RightMotors.spin(REVERSE)
-        Right_front.spin(REVERSE)
-        LeftMotors.spin(FORWARD)
-        Left_Front.spin(FORWARD)
-        if Forward_PID_Distance_Max_Speed__Distance < Distance_travled:
-            RightMotors.stop()
-            Right_front.stop()
-            LeftMotors.stop()
-            Left_Front.stop()
-            break
-        wait(5, MSEC)
 
-def turn_heading_velocity_momentum(turn_heading_velocity_momentum__heading, turn_heading_velocity_momentum__velocity, turn_heading_velocity_momentum__momentum):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CURRENT ACCURATE TURN USING IMU
-    Inertial21.set_rotation(0, DEGREES)
-    if turn_heading_velocity_momentum__heading > Inertial21.rotation(DEGREES):
-        while turn_heading_velocity_momentum__heading - turn_heading_velocity_momentum__momentum > Inertial21.rotation(DEGREES):
-            RightMotors.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            Right_front.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            LeftMotors.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            Left_Front.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            RightMotors.spin(REVERSE)
-            Right_front.spin(REVERSE)
-            LeftMotors.spin(REVERSE)
-            Left_Front.spin(REVERSE)
-            wait(5, MSEC)
-    else:
-        while turn_heading_velocity_momentum__heading + turn_heading_velocity_momentum__momentum < Inertial21.rotation(DEGREES):
-            RightMotors.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            Right_front.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            LeftMotors.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            Left_Front.set_velocity(turn_heading_velocity_momentum__velocity, PERCENT)
-            RightMotors.spin(FORWARD)
-            Right_front.spin(FORWARD)
-            LeftMotors.spin(FORWARD)
-            Left_Front.spin(FORWARD)
-            wait(5, MSEC)
-    RightMotors.stop()
-    LeftMotors.stop()
-    Right_front.stop()
-    Left_Front.stop()
-    turn1 = 1
 
-def GPS_Move_to_X_Y_at_max_velocity_of_Velocity(GPS_Move_to_X_Y_at_max_velocity_of_Velocity__X, GPS_Move_to_X_Y_at_max_velocity_of_Velocity__Y, GPS_Move_to_X_Y_at_max_velocity_of_Velocity__Velocity):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    pass
 
-def Red_Ring_Turn_Velocity(Red_Ring_Turn_Velocity__Turn_Velocity):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    pass
 
-def Blue_Ring_Turn_Velocity(Blue_Ring_Turn_Velocity__Turn_Velocity):
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    Forward_PID_Distance_Max_Speed(13, -30)
-    Lady_Brown.spin_for(FORWARD, 450, DEGREES)
-    wait(0.2, SECONDS)
-    Lady_Brown.spin_to_position(0, DEGREES, wait=False)
-    Forward_PID_Distance_Max_Speed(43, 50)
-    Forward_PID_Distance_Max_Speed(5, 10)
-    wait(0.2, SECONDS)
-    digital_out_b.set(True)
-    intake.spin(FORWARD)
-    wait(0.2, SECONDS)
-    turn_heading_velocity_momentum(135, 40, 1)
-    wait(0.2, SECONDS)
-    Forward_PID_Distance_Max_Speed(30, -70)
-    Forward_PID_Distance_Max_Speed(3, 40)
-    turn_heading_velocity_momentum(-9, 40, 1)
-    Forward_PID_Distance_Max_Speed(18, -40)
-    wait(1, SECONDS)
-    Forward_PID_Distance_Max_Speed(10, 40)
-    wait(0.8, SECONDS)
-    turn_heading_velocity_momentum(-60, 40, 1)
-    Forward_PID_Distance_Max_Speed(19, -40)
-    wait(0.5, SECONDS)
-    turn_heading_velocity_momentum(-70, 50, 1)
-    wait(0.3, SECONDS)
-    Lady_Brown.spin_for(FORWARD, 300, DEGREES)
-    Forward_PID_Distance_Max_Speed(45, -25)
 
-def all_stop():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # STOP ALL MOTORS FUNCTION
-    RightMotors.stop()
-    Right_front.stop()
-    LeftMotors.stop()
-    Left_Front.stop()
-    Lady_Brown.stop()
-    intake.stop()
 
-def Stop_Intake():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # STOP INTAKE FUNTION
-    Intake_running = True
-    intake.stop()
 
-def onevent_controller_1axis2Changed_0():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER jOYSTICK
-    Right_Axis = controller_1.axis2.position()
 
-def ondriver_drivercontrol_0():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # INTAKE CONTROLLER CONTROL
-    while True:
-        while Intake_Control:
-            if controller_1.buttonR1.pressing():
-                intake.set_velocity(80, PERCENT)
-                intake.spin(FORWARD)
-            elif controller_1.buttonR2.pressing():
-                intake.set_velocity(80, PERCENT)
-                intake.spin(REVERSE)
-            else:
-                intake.stop()
-            wait(5, MSEC)
-        wait(5, MSEC)
-
-def onevent_controller_1axis3Changed_0():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER jOYSTICK
-    Left_Axis = controller_1.axis3.position()
-
-def ondriver_drivercontrol_1():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # CONTROLLER MOTOR VELOCITY CONTROL
-    remote_control_code_enabled = True
-    DriveState = 1
-    volocity = 200
-    RightMotors.set_stopping(COAST)
-    LeftMotors.set_stopping(COAST)
-    Right_front.set_stopping(COAST)
-    Left_Front.set_stopping(COAST)
-    while True:
-        if Right_Axis > 0:
-            Right_Axis =  21.6 * Right_Axis ** 1/3
-        else:
-            Right_Axis = 21.6 * -(math.fabs(Right_Axis) ** 1/3)
-
-        if Left_Axis > 0:
-            Left_Axis = 21.6 * (Left_Axis) ** 1/3
-        else:
-            Left_Axis = 21.6 * -(math.fabs(Left_Axis) ** 1/3)
-
-        while True:
-            RightMotors.set_velocity(Right_Axis, PERCENT)
-            LeftMotors.set_velocity(Left_Axis, PERCENT)
-            Right_front.set_velocity(Right_Axis, PERCENT)
-            Left_Front.set_velocity(Left_Axis, PERCENT)
-            RightMotors.spin(FORWARD)
-            LeftMotors.spin(REVERSE)
-            Right_front.spin(FORWARD)
-            Left_Front.spin(REVERSE)
-            wait(5, MSEC)
-        wait(5, MSEC)
 
 def ondriver_drivercontrol_2():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -384,61 +202,9 @@ def ondriver_drivercontrol_4():
             Lady_Brown.stop()
         wait(5, MSEC)
 
-def when_started1():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    brain.screen.set_font(FontType.PROP20)
-    while True:
-        brain.screen.print("Team: ")
-        if Blue:
-            brain.screen.print("BLUE")
-            brain.screen.next_row()
-        elif Red:
-            brain.screen.print("RED")
-            brain.screen.next_row()
-        else:
-            brain.screen.print("OH NOO!!!")
-            brain.screen.next_row()
-        brain.screen.print("AVG Motor Temp:  ")
-        brain.screen.print(((RightMotors.temperature(PERCENT) + LeftMotors.temperature(PERCENT)) + (Right_front.temperature(PERCENT) + Left_Front.temperature(PERCENT))) / 2, precision=6 if vexcode_brain_precision is None else vexcode_brain_precision)
-        brain.screen.next_row()
-        brain.screen.print("L.B  Position:")
-        brain.screen.print(Lady_Brown.position(DEGREES), precision=6 if vexcode_brain_precision is None else vexcode_brain_precision)
-        brain.screen.next_row()
-        wait(5, MSEC)
 
-def when_started2():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    while True:
-        if Red:
-            while Red:
-                if optical_4.color() == Color.BLUE and optical_4.is_near_object():
-                    digital_out_e.set(True)
-                    while not (optical_4.color() == Color.RED and optical_4.is_near_object()):
-                        wait(5, MSEC)
-                    digital_out_e.set(False)
-                wait(5, MSEC)
-        elif Blue:
-            while Blue:
-                if optical_4.color() == Color.RED and optical_4.is_near_object():
-                    digital_out_e.set(True)
-                    while not (optical_4.color() == Color.BLUE and optical_4.is_near_object()):
-                        wait(5, MSEC)
-                    digital_out_e.set(False)
-                wait(5, MSEC)
-        else:
-            controller_1.screen.print("NO AUTO!!!")
-        wait(5, MSEC)
 
-def when_started3():
-    global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
-    # SENSING FOR ANTI-OBSTRUTION - GLOBAL
-    while True:
-        while Intake_running:
-            if not intake.is_spinning():
-                intake.spin(REVERSE)
-                wait(0.5, SECONDS)
-            wait(5, MSEC)
-        wait(5, MSEC)
+
 
 def when_started4():
     global message1, forward_move, Back_move, Stop, turn_right, turn, calibrate, stop_initialize, Auto_Stop, turn_left, start_auto, intake_forward, intake_backward, DOon, LB, DOon2, Blue, Red, Intake_Control, Intake_running, myVariable, volocity, Right_Axis, Left_Axis, IntakeStake, Degree, pi, movement, distance1, time1, rot, turn1, LadyBrown_Up, LadyBrown_score, LadyBrown, Right_turn, Left_turn, DriveState, start, Next, dos, tog, error, output, Kp, Ki, Kd, Dellay, Distance_travled, imput, Proportional, integral, derivitive, direction, Previus_error, AutoSelect, X_Start, Y_Start, Y_End, X_End, Angle, Distnce2, Distance2, Turn_Angle, remote_control_code_enabled, vexcode_brain_precision, vexcode_console_precision, vexcode_controller_1_precision
@@ -596,4 +362,4 @@ ws2 = Thread( when_started2 )
 ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
-when_started1()
+
