@@ -1,0 +1,18 @@
+{
+	"project": {
+		"name": "SpringFordFinalCode",
+		"slot": 1,
+		"description": "",
+		"platform": "V5",
+		"creationDate": "Fri, 07 Feb 2025 02:52:45 GMT",
+		"language": "python",
+		"python": {
+			"main": "/src/main.py"
+		},
+		"sdkVersion": "V5_1_0_1_25"
+	},
+	"extension": {
+		"version": "0.6.1",
+		"json": 1
+	}
+}
